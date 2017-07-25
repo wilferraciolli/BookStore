@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static javax.transaction.Transactional.TxType.REQUIRED;
@@ -27,7 +28,7 @@ public class BookRepository {
      * @param id the id
      * @return the book
      */
-    public Book findById(Long id){
+    public Book findById(@NotNull Long id){
         return em.find(Book.class, id);
     }
 
@@ -41,17 +42,15 @@ public class BookRepository {
         return query.getResultList();
     }
 
-
     /**
      * Count all books on the database.
      *
      * @return the long
      */
-    public Long countAll(){
+    public Long countAll() {
         TypedQuery<Long> query = em.createQuery("SELECT COUNT(b) FROM Book b", Long.class);
         return query.getSingleResult();
     }
-
 
     /**
      * Create book. Annotated with @transactional-Required because it will write to the database.
@@ -60,7 +59,7 @@ public class BookRepository {
      * @return the book
      */
     @Transactional(REQUIRED)
-    public Book create(Book book){
+    public Book create(@NotNull Book book){
         em.persist(book);
         return book;
     }
@@ -72,7 +71,7 @@ public class BookRepository {
      * @return the book
      */
     @Transactional(REQUIRED)
-    public Book update(Book book){
+    public Book update(@NotNull Book book){
         em.merge(book);
         return book;
     }
@@ -83,7 +82,7 @@ public class BookRepository {
      * @param id the id
      */
     @Transactional(REQUIRED)
-    public void deleteById(Long id){
+    public void deleteById(@NotNull Long id){
         em.remove(em.getReference(Book.class, id));
     }
 }

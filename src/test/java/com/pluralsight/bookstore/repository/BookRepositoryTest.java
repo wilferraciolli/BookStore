@@ -151,4 +151,51 @@ public class BookRepositoryTest {
         assertEquals(0, bookRepository.findAll().size());
     }
 
+    @Test(expected = Exception.class)
+    @InSequence(10)
+    public void shouldFailCreatingANullBook() {
+        bookRepository.create(null);
+    }
+
+    @Test(expected = Exception.class)
+    @InSequence(11)
+    public void shouldFailCreatingABookWithNullTitle() {
+        bookRepository.create(new Book("isbn", null, 12F, 123, Language.ENGLISH, new Date(), "imageURL", "description"));
+    }
+
+    @Test(expected = Exception.class)
+    @InSequence(12)
+    public void shouldFailCreatingABookWithLowUnitCostTitle() {
+        bookRepository.create(new Book("isbn", "title", 0F, 123, Language.ENGLISH, new Date(), "imageURL", "description"));
+    }
+
+    @Test(expected = Exception.class)
+    @InSequence(13)
+    public void shouldFailCreatingABookWithNullISBN() {
+        bookRepository.create(new Book(null, "title", 12F, 123, Language.ENGLISH, new Date(), "imageURL", "description"));
+    }
+
+    @Test(expected = Exception.class)
+    @InSequence(14)
+    public void shouldFailInvokingFindByIdWithNull() {
+        bookRepository.findById(null);
+    }
+
+    @Test
+    @InSequence(15)
+    public void shouldNotFindUnknownId() {
+        assertNull(bookRepository.findById(99999L));
+    }
+
+    @Test(expected = Exception.class)
+    @InSequence(16)
+    public void shouldFailInvokingDeleteByIdWithNull() {
+        bookRepository.deleteById(null);
+    }
+    @Test(expected = Exception.class)
+    @InSequence(17)
+    public void shouldNotDeleteUnknownId() {
+        bookRepository.deleteById(99999L);
+    }
+
 }
