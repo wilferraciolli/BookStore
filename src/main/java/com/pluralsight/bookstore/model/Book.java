@@ -52,6 +52,29 @@ public class Book {
     }
 
     /**
+     * Instantiates a new Book.
+     *
+     * @param isbn            the isbn
+     * @param title           the title
+     * @param unitCost        the unit cost
+     * @param nbOfPages       the nb of pages
+     * @param language        the language
+     * @param publicationDate the publication date
+     * @param imageURL        the image url
+     * @param description     the description
+     */
+    public Book(String isbn, String title, Float unitCost, Integer nbOfPages, Language language, Date publicationDate, String imageURL, String description) {
+        this.isbn = isbn;
+        this.title = title;
+        this.unitCost = unitCost;
+        this.nbOfPages = nbOfPages;
+        this.language = language;
+        this.publicationDate = publicationDate;
+        this.imageURL = imageURL;
+        this.description = description;
+    }
+
+    /**
      * Gets id.
      *
      * @return the id
