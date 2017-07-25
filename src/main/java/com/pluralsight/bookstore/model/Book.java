@@ -86,6 +86,21 @@ public class Book {
     }
 
     /**
+     * Update book.
+     *
+     * @param book the book
+     */
+    public void updateBook(Book book) {
+        this.title = book.getTitle();
+        this.unitCost = book.getUnitCost();
+        this.nbOfPages = book.getNbOfPages();
+        this.language = book.getLanguage();
+        this.publicationDate = book.getPublicationDate();
+        this.imageURL = book.imageURL;
+        this.description = book.getDescription();
+    }
+
+    /**
      * Gets id.
      *
      * @return the id
@@ -262,4 +277,5 @@ public class Book {
                 ", language=" + language +
                 '}';
     }
+
 }
