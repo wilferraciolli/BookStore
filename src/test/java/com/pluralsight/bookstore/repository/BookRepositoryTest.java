@@ -2,6 +2,9 @@ package com.pluralsight.bookstore.repository;
 
 import com.pluralsight.bookstore.model.Book;
 import com.pluralsight.bookstore.model.Language;
+import com.pluralsight.bookstore.util.IsbnGenerator;
+import com.pluralsight.bookstore.util.NumberGenerator;
+import com.pluralsight.bookstore.util.TextUtil;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
@@ -29,6 +32,12 @@ public class BookRepositoryTest {
     @Inject
     private BookRepository bookRepository;
 
+    @Inject
+    private IsbnGenerator isbnGenerator;
+
+    @Inject
+    private TextUtil textUtil;
+
     private static Long bookId;
 
     /**
@@ -43,6 +52,10 @@ public class BookRepositoryTest {
                 .addClass(Book.class)
                 .addClass(Language.class)
                 .addClass(BookRepository.class)
+                .addClass(TextUtil.class)
+                .addClass(NumberGenerator.class)
+                .addClass(IsbnGenerator.class)
+                .addClass(TextUtil.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsManifestResource("META-INF/test-persistence.xml", "persistence.xml");
     }

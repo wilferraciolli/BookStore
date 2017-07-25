@@ -1,7 +1,10 @@
 package com.pluralsight.bookstore.repository;
 
 import com.pluralsight.bookstore.model.Book;
+import com.pluralsight.bookstore.util.NumberGenerator;
+import com.pluralsight.bookstore.util.TextUtil;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -22,13 +25,19 @@ public class BookRepository {
     @PersistenceContext(unitName = "bookStorePU")
     private EntityManager em;
 
+    @Inject
+    private TextUtil textUtil;
+
+    @Inject
+    private NumberGenerator generator;
+
     /**
      * Find by id book.
      *
      * @param id the id
      * @return the book
      */
-    public Book findById(@NotNull Long id){
+    public Book findById(@NotNull Long id) {
         return em.find(Book.class, id);
     }
 
@@ -37,7 +46,7 @@ public class BookRepository {
      *
      * @return the list
      */
-    public List<Book> findAll(){
+    public List<Book> findAll() {
         TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b ORDER BY b.title DESC", Book.class);
         return query.getResultList();
     }
@@ -59,7 +68,11 @@ public class BookRepository {
      * @return the book
      */
     @Transactional(REQUIRED)
-    public Book create(@NotNull Book book){
+    public Book create(@NotNull Book book) {
+        book.setTitle(textUtil.sanitize(book.getTitle()));
+        if (book.getIsbn() != null) {
+            book.setIsbn(generator.generateNumber());
+        }
         em.persist(book);
         return book;
     }
@@ -71,7 +84,7 @@ public class BookRepository {
      * @return the book
      */
     @Transactional(REQUIRED)
-    public Book update(@NotNull Book book){
+    public Book update(@NotNull Book book) {
         em.merge(book);
         return book;
     }
@@ -82,7 +95,7 @@ public class BookRepository {
      * @param id the id
      */
     @Transactional(REQUIRED)
-    public void deleteById(@NotNull Long id){
+    public void deleteById(@NotNull Long id) {
         em.remove(em.getReference(Book.class, id));
     }
 }
