@@ -3,7 +3,7 @@ package com.pluralsight.bookstore.util;
 import java.util.Random;
 
 /**
- *  Isbn generator, implements Number Generator.
+ *  Isbn generator, implements Number Generator
  */
 public class IsbnGenerator implements NumberGenerator {
 
