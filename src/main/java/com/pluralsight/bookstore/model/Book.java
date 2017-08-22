@@ -46,8 +46,8 @@ public class Book {
     private Float unitCost;
 
     @Column(length = 50)
-    @NotNull
-    @Size(min = 1, max = 50)
+   // @NotNull
+    //@Size(min = 1, max = 50)
     @ApiModelProperty("ISBN number")
     private String isbn;
 
